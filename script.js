@@ -115,7 +115,7 @@ function initAudio() {
 function updateNowPlaying() {
     const trackPath = playlist[currentTrackIndex];
     const trackName = trackPath.split('/').pop().replace('.mp3', '');
-    nowPlayingText.innerText = `NOW PLAYING: ${trackName}`;
+    nowPlayingText.innerText = `СЕЙЧАС ТЫ СЛУШАЕШЬ: ${trackName}`;
     nowPlayingText.style.opacity = '1';
 
     // Hide after 5 seconds
