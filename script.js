@@ -45,6 +45,27 @@ const mapNames = {
     "cl_map": "НЕИЗВЕСТНОЙ ТЕРРИТОРИИ"
 };
 
+const mapBackgrounds = {
+    "awm_nikaleninsk": "maps/awm_nikaleninsk.png",
+    "cl_map": "maps/cl_map.png",
+    "ft_belostock_v1": "maps/ft_belostock_v1.png",
+    "ft_ww3": "maps/ft_ww3.png",
+    "gm_blesmont": "maps/gm_blesmont.png",
+    "gm_puzilovo": "maps/gm_puzilovo.png",
+    "rp_cherno_v3": "maps/rp_cherno_v3.png",
+    "rp_ft_izum": "maps/rp_ft_izum.png",
+    "rp_ft_izum_4": "maps/rp_ft_izum_4.png",
+    "rp_ft_kharkiv_autumn": "maps/rp_ft_kharkiv_autumn.png",
+    "rp_ft_kharkiv_v1": "maps/rp_ft_kharkiv_v1.png",
+    "rp_ft_kherson_v4": "maps/rp_ft_kherson_v4.png",
+    "rp_ft_snow_pripyat": "maps/rp_ft_snow_pripyat.png",
+    "rp_ft_ukwar_d": "maps/rp_ft_ukwar_d.png",
+    "rp_ft_ww3": "maps/rp_ft_ww3.png",
+    "rp_siberia_v1": "maps/rp_siberia_v1.png",
+    "rp_valkyrie_forest_v1": "maps/rp_valkyrie_forest_v1.png",
+    "rp_ww1_siegfriedtrenches_b02": "maps/rp_ww1_siegfriedtrenches_b02.png"
+};
+
 // Инициализация аудио
 const audio = document.getElementById('loading-music');
 const logoContainer = document.getElementById('logo-container');
@@ -170,6 +191,15 @@ window.GameDetails = function (servername, serverurl, mapname, maxplayers, steam
     const displayName = mapNames[cleanMapName] || cleanMapName.toUpperCase();
 
     mapNameText.innerText = `ВЫСАЖИВАЕМСЯ НА ТЕРРИТОРИИ ${displayName}`;
+
+    const mapBg = document.getElementById('map-bg');
+    if (mapBackgrounds[cleanMapName]) {
+        mapBg.style.backgroundImage = `url('${mapBackgrounds[cleanMapName]}')`;
+    } else {
+        const bgKeys = Object.keys(mapBackgrounds);
+        const randomMap = bgKeys[Math.floor(Math.random() * bgKeys.length)];
+        mapBg.style.backgroundImage = `url('${mapBackgrounds[randomMap]}')`;
+    }
 };
 
 window.SetFilesTotal = function (total) {
