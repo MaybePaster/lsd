@@ -8,9 +8,15 @@ let neededFiles = 0;
 
 // Плейлист (добавьте сюда названия своих файлов)
 const playlist = [
-    'music.mp3',
-    'music2.mp3',
-    'music3.mp3'
+    'music/Eiffel 65 - Blue (Da Ba Dee) [Gabry Ponte Ice Pop Mix] (Original Video with subtitles).mp3',
+    'music/Give it to me - Timbaland(Zoolander Phonk Version - Tailun).mp3',
+    'music/I FOUND IT (PoPiPo JUMPSTYLE).mp3',
+    'music/Just Dance (Hardstyle Remix) (SPED UP).mp3',
+    'music/Loco Loco  - It Burns! Burns! Burns!.mp3',
+    'music/MAGAZ21 - ЕСЛИ В СЕРДЦЕ ЖИВЕТ ХАРДКОР.mp3',
+    'music/O-Zone - Dragostea Din Tei [Official Video].mp3',
+    'music/OXXXYMIRON — МОХ.mp3',
+    'music/элджей - рваные джинсы bass boosted earrape remix.mp3'
 ];
 
 let currentTrackIndex = Math.floor(Math.random() * playlist.length);
@@ -36,17 +42,17 @@ function initAudio() {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioCtx.createAnalyser();
         source = audioCtx.createMediaElementSource(audio);
-        
+
         source.connect(analyser);
         analyser.connect(audioCtx.destination);
-        
+
         analyser.fftSize = 256;
         const bufferLength = analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
-        
+
         // Настройка плейлиста
         setupPlaylist();
-        
+
         // Запуск визуализации
         renderFrame();
     } catch (e) {
@@ -57,7 +63,7 @@ function initAudio() {
 function setupPlaylist() {
     // Устанавливаем первый трек
     audio.src = playlist[currentTrackIndex];
-    
+
     // Когда трек заканчивается, играем следующий
     audio.onended = () => {
         currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
@@ -79,25 +85,25 @@ function setupPlaylist() {
 
 function renderFrame() {
     requestAnimationFrame(renderFrame);
-    
+
     if (!analyser) return;
-    
+
     analyser.getByteFrequencyData(dataArray);
-    
+
     // Вычисляем уровень баса (первые несколько частотных корзин)
     let bass = 0;
     for (let i = 0; i < 10; i++) {
         bass += dataArray[i];
     }
     bass = bass / 10; // Среднее значение баса (0-255)
-    
+
     // Масштабирование логотипа на основе баса
     const scale = 1 + (bass / 255) * 0.2; // Увеличиваем до 1.2x
     logoContainer.style.transform = `scale(${scale})`;
-    
+
     // Дополнительное свечение при сильном басе
     const glow = (bass / 255) * 40;
-    document.getElementById('logo').style.filter = `drop-shadow(0 0 ${10 + glow}px rgba(0, 255, 204, ${0.3 + (bass/255)}))`;
+    document.getElementById('logo').style.filter = `drop-shadow(0 0 ${10 + glow}px rgba(0, 255, 204, ${0.3 + (bass / 255)}))`;
 
     // Если бас очень сильный, добавляем тряску (глич)
     if (bass > 210) {
@@ -108,23 +114,23 @@ function renderFrame() {
 }
 
 // GMod Functions
-window.GameDetails = function(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+window.GameDetails = function (servername, serverurl, mapname, maxplayers, steamid, gamemode) {
     serverNameText.innerText = servername || "MILITARY OPERATIONS";
     mapNameText.innerText = `DEPLOYING TO: ${mapname || "UNKNOWN"}`;
 };
 
-window.SetFilesTotal = function(total) {
+window.SetFilesTotal = function (total) {
     totalFiles = total;
 };
 
-window.SetFilesNeeded = function(needed) {
+window.SetFilesNeeded = function (needed) {
     neededFiles = needed;
     updateProgress();
 };
 
-window.SetStatusChanged = function(status) {
+window.SetStatusChanged = function (status) {
     statusText.innerText = status;
-    
+
     // Если статус содержит информацию о начале загрузки, пробуем стартануть звук
     if (status && !audioCtx) {
         initAudio();
@@ -133,7 +139,7 @@ window.SetStatusChanged = function(status) {
 
 function updateProgress() {
     if (totalFiles <= 0) return;
-    
+
     const progress = Math.min(100, Math.max(0, Math.floor(((totalFiles - neededFiles) / totalFiles) * 100)));
     progressBar.style.width = progress + '%';
     percentText.innerText = progress + '%';
