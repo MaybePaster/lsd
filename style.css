@@ -129,6 +129,19 @@ body {
     color: var(--text-dim);
     letter-spacing: 5px;
     text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.now-playing-info {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    transition: opacity 0.5s ease;
+    border-top: 1px solid rgba(0, 255, 204, 0.2);
+    display: inline-block;
+    padding-top: 10px;
 }
 
 /* Прогресс бар */

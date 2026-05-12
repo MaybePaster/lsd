@@ -9,7 +9,9 @@ let neededFiles = 0;
 // Плейлист (добавьте сюда названия своих файлов)
 const playlist = [
     'music/Eiffel 65 - Blue (Da Ba Dee) [Gabry Ponte Ice Pop Mix] (Original Video with subtitles).mp3',
+    'music/Erica I dont know nightcore.mp3',
     'music/Give it to me - Timbaland(Zoolander Phonk Version - Tailun).mp3',
+    'music/GYM HARDSTYLE - Katy Perry ＂California Girls＂ Hardstyle Remix (4K).mp3',
     'music/I FOUND IT (PoPiPo JUMPSTYLE).mp3',
     'music/Just Dance (Hardstyle Remix) (SPED UP).mp3',
     'music/Loco Loco  - It Burns! Burns! Burns!.mp3',
@@ -20,6 +22,7 @@ const playlist = [
 ];
 
 let currentTrackIndex = Math.floor(Math.random() * playlist.length);
+let isInitialized = false;
 
 // Инициализация аудио
 const audio = document.getElementById('loading-music');
@@ -29,6 +32,10 @@ const statusText = document.getElementById('status');
 const percentText = document.getElementById('percent');
 const serverNameText = document.getElementById('servername');
 const mapNameText = document.getElementById('mapname');
+const nowPlayingText = document.createElement('div');
+nowPlayingText.id = 'now-playing';
+nowPlayingText.className = 'now-playing-info';
+document.querySelector('.server-info').appendChild(nowPlayingText);
 
 let audioCtx;
 let analyser;
@@ -36,7 +43,8 @@ let dataArray;
 let source;
 
 function initAudio() {
-    if (audioCtx) return;
+    if (isInitialized) return;
+    isInitialized = true;
 
     try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -57,29 +65,48 @@ function initAudio() {
         renderFrame();
     } catch (e) {
         console.error("Audio API error:", e);
+        // Fallback for playlist if WebAudio fails
+        setupPlaylist();
     }
+}
+
+function updateNowPlaying() {
+    const trackPath = playlist[currentTrackIndex];
+    const trackName = trackPath.split('/').pop().replace('.mp3', '');
+    nowPlayingText.innerText = `NOW PLAYING: ${trackName}`;
+    nowPlayingText.style.opacity = '1';
+
+    // Hide after 5 seconds
+    setTimeout(() => {
+        nowPlayingText.style.opacity = '0.5';
+    }, 5000);
 }
 
 function setupPlaylist() {
     // Устанавливаем первый трек
     audio.src = playlist[currentTrackIndex];
+    updateNowPlaying();
 
     // Когда трек заканчивается, играем следующий
     audio.onended = () => {
         currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
         audio.src = playlist[currentTrackIndex];
+        updateNowPlaying();
         audio.play();
     };
 
     // Пытаемся запустить музыку
+    const startPlay = () => {
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        audio.play().catch(e => console.log("Playback failed:", e));
+    };
+
     audio.play().catch(e => {
         console.log("Autoplay blocked, waiting for interaction");
-        window.addEventListener('mousedown', () => {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            audio.play();
-        }, { once: true });
+        window.addEventListener('mousedown', startPlay, { once: true });
+        window.addEventListener('keydown', startPlay, { once: true });
     });
 }
 
@@ -115,8 +142,8 @@ function renderFrame() {
 
 // GMod Functions
 window.GameDetails = function (servername, serverurl, mapname, maxplayers, steamid, gamemode) {
-    serverNameText.innerText = servername || "MILITARY OPERATIONS";
-    mapNameText.innerText = `DEPLOYING TO: ${mapname || "UNKNOWN"}`;
+    serverNameText.innerText = servername || "ВОЙНА НА УКРАИНЕ";
+    mapNameText.innerText = `ВЫСАЖИВАЕМСЯ НА ${mapname || "UNKNOWN"}`;
 };
 
 window.SetFilesTotal = function (total) {
