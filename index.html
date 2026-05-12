@@ -1,40 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>Gay</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #050000;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        .container img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .container p {
-            color: white;
-            font-size: 18px;
-            font-family: 'Anonymous Pro', monospace;
-        }
-    </style>
+    <title>Military RP Loading</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <img src="https://i.ibb.co/qsVpDqM/gay.webp">
-    <p>Gays always think the same way</p>
-</div>
+    <div class="overlay"></div>
+    <div class="scanlines"></div>
+
+    <div class="main-container">
+        <!-- Логотип -->
+        <div id="logo-container" class="logo-wrapper">
+            <img id="logo" src="ft.png" alt="Logo">
+            <div class="logo-glow"></div>
+        </div>
+
+        <!-- Информация о сервере -->
+        <div class="server-info">
+            <h1 id="servername">MILITARY OPERATIONS</h1>
+            <p id="mapname">INITIALIZING...</p>
+        </div>
+
+        <!-- Прогресс бар -->
+        <div class="progress-section">
+            <div class="status-container">
+                <span id="status">Загрузка ресурсов...</span>
+                <span id="percent">0%</span>
+            </div>
+            <div class="progress-bg">
+                <div id="progress-bar" class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Музыкальный плеер -->
+    <!-- Пользователь закинет свою музыку сюда, пока ставим заглушку -->
+    <audio id="loading-music" src="music.mp3" loop></audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
