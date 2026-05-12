@@ -24,6 +24,27 @@ const playlist = [
 let currentTrackIndex = Math.floor(Math.random() * playlist.length);
 let isInitialized = false;
 
+const mapNames = {
+    "awm_nikaleninsk": "ПОКРОВСКА",
+    "ft_belostock_v1": "СНЕЖКА",
+    "ft_ww3": "ТРЕТЬЕЙ МИРОВОЙ ВОЙНЫ",
+    "gm_blesmont": "БЛЕСМОНТА",
+    "gm_puzilovo": "ПУЗИЛОВО",
+    "rp_cherno_v3": "ЧЕРНО",
+    "rp_ft_izum": "ИЗЮМА",
+    "rp_ft_izum_4": "ИЗЮМА",
+    "rp_ft_kharkiv_autumn": "ХАРЬКОВЩИНЫ",
+    "rp_ft_kharkiv_v1": "ХАРЬКОВЩИНЫ",
+    "rp_ft_kherson_v4": "ХЕРСОНА",
+    "rp_ft_snow_pripyat": "ПРИПЯТИ",
+    "rp_ft_ukwar_d": "УКРАИНЫ",
+    "rp_ft_ww3": "ТРЕТЬЕЙ МИРОВОЙ",
+    "rp_siberia_v1": "СИБИРИ",
+    "rp_valkyrie_forest_v1": "ЛЕСАХ ВАЛЬКИРИИ",
+    "rp_ww1_siegfriedtrenches_b02": "ОКОПАХ",
+    "cl_map": "НЕИЗВЕСТНОЙ ТЕРРИТОРИИ"
+};
+
 // Инициализация аудио
 const audio = document.getElementById('loading-music');
 const logoContainer = document.getElementById('logo-container');
@@ -143,7 +164,12 @@ function renderFrame() {
 // GMod Functions
 window.GameDetails = function (servername, serverurl, mapname, maxplayers, steamid, gamemode) {
     serverNameText.innerText = servername || "ВОЙНА НА УКРАИНЕ";
-    mapNameText.innerText = `ВЫСАЖИВАЕМСЯ НА ${mapname || "UNKNOWN"}`;
+
+    // Получаем красивое название из словаря или используем оригинал
+    const cleanMapName = mapname ? mapname.toLowerCase() : "unknown";
+    const displayName = mapNames[cleanMapName] || cleanMapName.toUpperCase();
+
+    mapNameText.innerText = `ВЫСАЖИВАЕМСЯ НА ТЕРРИТОРИИ ${displayName}`;
 };
 
 window.SetFilesTotal = function (total) {
