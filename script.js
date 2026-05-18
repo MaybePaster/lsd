@@ -68,7 +68,7 @@ const mapBackgrounds = {
 
 // Инициализация аудио
 const audio = document.getElementById('loading-music');
-audio.volume = 0.3; // Снижаем громкость вдвойне
+audio.volume = 0.2; // Снижаем громкость вдвойне
 const logoContainer = document.getElementById('logo-container');
 const progressBar = document.getElementById('progress-bar');
 const statusText = document.getElementById('status');
