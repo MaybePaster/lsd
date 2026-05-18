@@ -215,7 +215,7 @@ body {
 /* QR Код Discord */
 .qr-container {
     position: absolute;
-    bottom: 30px;
+    top: 30px;
     right: 30px;
     display: flex;
     flex-direction: column;
@@ -232,7 +232,7 @@ body {
 }
 
 .qr-container p {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--text-main);
     letter-spacing: 2px;
     text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
@@ -241,8 +241,8 @@ body {
 }
 
 .qr-container img {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
     border-radius: 4px;
     border: 1px solid rgba(0, 255, 204, 0.3);
 }
